@@ -56,7 +56,7 @@ public class Main {
                     = conn.prepareStatement("SELECT * FROM Aihe WHERE kurssi_id = ?");
             stmt2.setInt(1, kurssiId);
             
-            ResultSet tulos2 = stmt.executeQuery();
+            ResultSet tulos2 = stmt2.executeQuery();
 
             // käsittele kyselyn tulokset
             while (tulos2.next()) {
@@ -66,6 +66,8 @@ public class Main {
             
             k.setAiheet(aiheet);
 
+            stmt2.close();
+            tulos2.close();
             
             // sulje yhteys tietokantaan
             conn.close();
