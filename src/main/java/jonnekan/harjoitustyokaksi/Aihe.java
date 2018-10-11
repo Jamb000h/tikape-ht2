@@ -11,10 +11,12 @@ package jonnekan.harjoitustyokaksi;
  */
 public class Aihe {
     private Integer id;
+    private Integer kurssiId;
     private String nimi;
 
-    public Aihe(Integer id, String nimi) {
+    public Aihe(Integer id, Integer kurssiId, String nimi) {
         this.id = id;
+        this.kurssiId = kurssiId;
         this.nimi = nimi;
     }
 
@@ -24,6 +26,14 @@ public class Aihe {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+    
+    public Integer getKurssiId() {
+        return id;
+    }
+
+    public void setKurssiId(Integer kurssiId) {
+        this.id = kurssiId;
     }
 
     public String getNimi() {

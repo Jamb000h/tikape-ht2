@@ -31,50 +31,28 @@ public class Main {
         Spark.get("/kurssi/:id", (req, res) -> {
             
             Integer kurssiId = Integer.parseInt(req.params("id"));
-            List<Aihe> aiheet = new ArrayList<>();
             
-            Kurssi k = null;
+            List<Aihe> aiheet = new ArrayList<>();
 
             // avaa yhteys tietokantaan
             Connection conn = getConnection();
             // tee kysely
             PreparedStatement stmt
-                    = conn.prepareStatement("SELECT * FROM Kurssi WHERE id = ?");
+                    = conn.prepareStatement("SELECT * FROM Aihe WHERE kurssi_id = ?");
             stmt.setInt(1, kurssiId);
             ResultSet tulos = stmt.executeQuery();
 
             // käsittele kyselyn tulokset
             while (tulos.next()) {
-                k = new Kurssi(tulos.getInt("id"), tulos.getString("nimi"));
-                break; // Poistutaan loopista ensimmäisen tuloksen jälkeen
-            }
-            
-            stmt.close();
-            tulos.close();
-            
-            PreparedStatement stmt2
-                    = conn.prepareStatement("SELECT * FROM Aihe WHERE kurssi_id = ?");
-            stmt2.setInt(1, kurssiId);
-            
-            ResultSet tulos2 = stmt2.executeQuery();
-
-            // käsittele kyselyn tulokset
-            while (tulos2.next()) {
-                Aihe a = new Aihe(tulos2.getInt("id"), tulos2.getString("nimi"));
+                Aihe a = new Aihe(tulos.getInt("id"), tulos.getInt("kurssi_id"), tulos.getString("nimi"));
                 aiheet.add(a);
             }
-            
-            k.setAiheet(aiheet);
-
-            stmt2.close();
-            tulos2.close();
-            
             // sulje yhteys tietokantaan
             conn.close();
-            
+
             HashMap map = new HashMap<>();
 
-            map.put("kurssi", k);
+            map.put("aiheet", aiheet);
 
             return new ModelAndView(map, "index");
 
