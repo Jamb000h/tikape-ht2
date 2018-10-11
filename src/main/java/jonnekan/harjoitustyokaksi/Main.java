@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import spark.ModelAndView;
 import spark.Spark;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
@@ -26,6 +27,52 @@ public class Main {
         if (System.getenv("PORT") != null) {
             Spark.port(Integer.valueOf(System.getenv("PORT")));
         }
+        
+        Spark.get("/kurssi/:id", (req, res) -> {
+            
+            Integer kurssiId = Integer.parseInt(req.params("id"));
+            List<Aihe> aiheet = new ArrayList<>();
+            
+            Kurssi k = null;
+
+            // avaa yhteys tietokantaan
+            Connection conn = getConnection();
+            // tee kysely
+            PreparedStatement stmt
+                    = conn.prepareStatement("SELECT * FROM Kurssi WHERE id = ?");
+            stmt.setInt(1, kurssiId);
+            ResultSet tulos = stmt.executeQuery();
+
+            // käsittele kyselyn tulokset
+            while (tulos.next()) {
+                k = new Kurssi(tulos.getInt("id"), tulos.getString("nimi"));
+                break; // Poistutaan loopista ensimmäisen tuloksen jälkeen
+            }
+            
+            stmt.close();
+            tulos.close();
+            
+            PreparedStatement stmt2
+                    = conn.prepareStatement("SELECT * FROM Aihe WHERE kurssi_id = ?");
+            stmt2.setInt(1, kurssiId);
+            
+            ResultSet tulos2 = stmt.executeQuery();
+
+            // käsittele kyselyn tulokset
+            while (tulos2.next()) {
+                Aihe a = new Aihe(tulos2.getInt("id"), tulos2.getString("nimi"));
+                aiheet.add(a);
+            }
+            
+            k.setAiheet(aiheet);
+
+            
+            // sulje yhteys tietokantaan
+            conn.close();
+
+            return new ModelAndView(k, "kurssi");
+
+        }, new ThymeleafTemplateEngine());
         
         Spark.get("*", (req, res) -> {
  
