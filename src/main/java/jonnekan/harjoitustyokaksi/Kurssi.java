@@ -15,12 +15,10 @@ import java.util.List;
 public class Kurssi {
     private Integer id;
     private String nimi;
-    private List<Aihe> aiheet;
 
     public Kurssi(Integer id, String nimi) {
         this.id = id;
         this.nimi = nimi;
-        this.aiheet = new ArrayList<>();
     }
 
     public Integer getId() {
@@ -37,14 +35,6 @@ public class Kurssi {
 
     public void setNimi(String nimi) {
         this.nimi = nimi;
-    }
-    
-    public List getAiheet() {
-        return this.aiheet;
-    }
-    
-    public void setAiheet(List aiheet) {
-        this.aiheet = aiheet;
     }
 
 }

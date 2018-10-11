@@ -54,7 +54,67 @@ public class Main {
 
             map.put("aiheet", aiheet);
 
-            return new ModelAndView(map, "index");
+            return new ModelAndView(map, "kurssi");
+
+        }, new ThymeleafTemplateEngine());
+        
+        Spark.get("/aihe/:id", (req, res) -> {
+            
+            Integer aiheId = Integer.parseInt(req.params("id"));
+            
+            List<Kysymys> kysymykset = new ArrayList<>();
+
+            // avaa yhteys tietokantaan
+            Connection conn = getConnection();
+            // tee kysely
+            PreparedStatement stmt
+                    = conn.prepareStatement("SELECT * FROM Kysymys WHERE aihe_id = ?");
+            stmt.setInt(1, aiheId);
+            ResultSet tulos = stmt.executeQuery();
+
+            // käsittele kyselyn tulokset
+            while (tulos.next()) {
+                Kysymys k = new Kysymys(tulos.getInt("id"), tulos.getInt("aihe_id"), tulos.getString("kysymys"));
+                kysymykset.add(k);
+            }
+            // sulje yhteys tietokantaan
+            conn.close();
+
+            HashMap map = new HashMap<>();
+
+            map.put("kysymykset", kysymykset);
+
+            return new ModelAndView(map, "aihe");
+
+        }, new ThymeleafTemplateEngine());
+        
+        Spark.get("/kysymys/:id", (req, res) -> {
+            
+            Integer kysymysId = Integer.parseInt(req.params("id"));
+            
+            List<Vastaus> vastaukset = new ArrayList<>();
+
+            // avaa yhteys tietokantaan
+            Connection conn = getConnection();
+            // tee kysely
+            PreparedStatement stmt
+                    = conn.prepareStatement("SELECT * FROM Vastaus WHERE kysymys_id = ?");
+            stmt.setInt(1, kysymysId);
+            ResultSet tulos = stmt.executeQuery();
+
+            // käsittele kyselyn tulokset
+            while (tulos.next()) {
+                Vastaus v = new Vastaus(tulos.getInt("id"), tulos.getInt("kysymys_id"), tulos.getString("vastaus"), tulos.getBoolean("oikein"));
+                vastaukset.add(v);
+            }
+            // sulje yhteys tietokantaan
+            conn.close();
+
+            HashMap map = new HashMap<>();
+
+            map.put("vastaukset", vastaukset);
+
+            return new ModelAndView(map, "kysymys");
 
         }, new ThymeleafTemplateEngine());
         
