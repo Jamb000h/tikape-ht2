@@ -29,29 +29,29 @@ public class Main {
         
         Spark.get("*", (req, res) -> {
  
-//            List<String> huonekalut = new ArrayList<>();
-//
-//            // avaa yhteys tietokantaan
-//            Connection conn
-//                    = DriverManager.getConnection("jdbc:sqlite:huonekalut.db");
-//            // tee kysely
-//            PreparedStatement stmt
-//                    = conn.prepareStatement("SELECT nimi FROM Huonekalu");
-//            ResultSet tulos = stmt.executeQuery();
-//
-//            // käsittele kyselyn tulokset
-//            while (tulos.next()) {
-//                String nimi = tulos.getString("nimi");
-//                huonekalut.add(nimi);
-//            }
-//            // sulje yhteys tietokantaan
-//            conn.close();
-//
+            List<Kurssi> kurssit = new ArrayList<>();
+
+            // avaa yhteys tietokantaan
+            Connection conn = getConnection();
+            // tee kysely
+            PreparedStatement stmt
+                    = conn.prepareStatement("SELECT * FROM Kurssi");
+            ResultSet tulos = stmt.executeQuery();
+
+            // käsittele kyselyn tulokset
+            while (tulos.next()) {
+                Kurssi k = new Kurssi(tulos.getInt("id"), tulos.getString("nimi"));
+                kurssit.add(k);
+            }
+            // sulje yhteys tietokantaan
+            conn.close();
+
             HashMap map = new HashMap<>();
 
-            map.put("moi", "moi");
+            map.put("kurssit", kurssit);
 
             return new ModelAndView(map, "index");
+
         }, new ThymeleafTemplateEngine());
     }
     
