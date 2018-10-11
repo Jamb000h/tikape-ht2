@@ -13,7 +13,7 @@ and open the template in the editor.
     <body>
         <ul>
             <li th:each="kurssi : ${kurssit}">
-                <a th:href="@{/kurssi/{id}(id=${kurssi.getId())}">
+                <a th:href="@{/kurssi/{id}(id=${kurssi.getId()})}">
                     <h2 th:text="${kurssi.getNimi()}"></h2>
                 </a>
             </li>
