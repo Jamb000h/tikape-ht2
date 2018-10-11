@@ -1,1 +1,1 @@
-"web: java -cp target/classes:target/dependency/* jonnekan.harjoitustyokaksi.Main" 
+web: java -cp target/classes:target/dependency/* jonnekan.harjoitustyokaksi.Main
