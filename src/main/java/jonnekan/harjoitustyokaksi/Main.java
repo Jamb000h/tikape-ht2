@@ -30,32 +30,19 @@ public class Main {
         
         Database database = new Database();
         KurssiDao kurssiDao = new KurssiDao(database);
+        AiheDao aiheDao = new AiheDao(database);
         
         Spark.get("/kurssi/:id", (req, res) -> {
             
             Integer kurssiId = Integer.parseInt(req.params("id"));
             
-            List<Aihe> aiheet = new ArrayList<>();
-
-            // avaa yhteys tietokantaan
-            Connection conn = getConnection();
-            // tee kysely
-            PreparedStatement stmt
-                    = conn.prepareStatement("SELECT * FROM Aihe WHERE kurssi_id = ?");
-            stmt.setInt(1, kurssiId);
-            ResultSet tulos = stmt.executeQuery();
-
-            // käsittele kyselyn tulokset
-            while (tulos.next()) {
-                Aihe a = new Aihe(tulos.getInt("id"), tulos.getInt("kurssi_id"), tulos.getString("nimi"));
-                aiheet.add(a);
-            }
-            // sulje yhteys tietokantaan
-            conn.close();
+            List<Aihe> aiheet = aiheDao.findAll();
+            Kurssi k = kurssiDao.findOne(kurssiId);
 
             HashMap map = new HashMap<>();
 
             map.put("aiheet", aiheet);
+            map.put("kurssi", k);
 
             return new ModelAndView(map, "kurssi");
 

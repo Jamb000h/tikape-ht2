@@ -5,24 +5,28 @@
  */
 package jonnekan.harjoitustyokaksi;
 
-import java.util.*;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author Jonne
  */
-public class KurssiDao implements Dao<Kurssi, Integer> {
+public class AiheDao implements Dao<Aihe, Integer> {
     private Database database;
 
-    public KurssiDao(Database database) {
+    public AiheDao(Database database) {
         this.database = database;
     }
 
     @Override
-    public Kurssi findOne(Integer key) throws SQLException {
+    public Aihe findOne(Integer key) throws SQLException {
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Kurssi WHERE id = ?");
+        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Aihe WHERE id = ?");
         stmt.setInt(1, key);
 
         ResultSet rs = stmt.executeQuery();
@@ -31,28 +35,28 @@ public class KurssiDao implements Dao<Kurssi, Integer> {
             return null;
         }
 
-        Kurssi k = new Kurssi(rs.getInt("id"), rs.getString("nimi"));
+        Aihe a = new Aihe(rs.getInt("id"), rs.getInt("kurssi_id"), rs.getString("nimi"));
   
         stmt.close();
         rs.close();
 
         conn.close();
 
-        return k;
+        return a;
     }
 
     @Override
-    public List<Kurssi> findAll() throws SQLException {
+    public List<Aihe> findAll() throws SQLException {
         
-        ArrayList<Kurssi> kurssit = new ArrayList<>();
+        ArrayList<Aihe> aiheet = new ArrayList<>();
         
 	Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Kurssi");
+        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Aihe");
 
         ResultSet rs = stmt.executeQuery();
         
         while(rs.next()) {
-            kurssit.add(new Kurssi(rs.getInt("id"), rs.getString("nimi")));
+            aiheet.add(new Aihe(rs.getInt("id"), rs.getInt("kurssi_id"), rs.getString("nimi")));
         }
   
         stmt.close();
@@ -60,27 +64,27 @@ public class KurssiDao implements Dao<Kurssi, Integer> {
 
         conn.close();
 
-        return kurssit;
+        return aiheet;
     }
 
     @Override
-    public Kurssi saveOrUpdate(Kurssi k) throws SQLException {
+    public Aihe saveOrUpdate(Aihe a) throws SQLException {
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("INSERT INTO Kurssi (name) VALUES (?)");
-        
-        stmt.setString(1, k.getNimi());
+        PreparedStatement stmt = conn.prepareStatement("INSERT INTO Aihe (kurssi_id, name) VALUES (?, ?)");
+        stmt.setInt(1, a.getKurssiId());
+        stmt.setString(2, a.getNimi());
         stmt.execute();
 
         stmt.close();
         conn.close();
         
-        return k;
+        return a;
     }
   
     @Override
     public void delete(Integer key) throws SQLException {
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("DELETE FROM Kurssi WHERE id = ?");
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM Aihe WHERE id = ?");
 
         stmt.setInt(1, key);
         stmt.executeUpdate();
