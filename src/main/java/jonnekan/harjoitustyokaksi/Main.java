@@ -71,8 +71,12 @@ public class Main {
             
             // sulje yhteys tietokantaan
             conn.close();
+            
+            HashMap map = new HashMap<>();
 
-            return new ModelAndView(k, "kurssi");
+            map.put("kurssi", k);
+
+            return new ModelAndView(map, "index");
 
         }, new ThymeleafTemplateEngine());
         
