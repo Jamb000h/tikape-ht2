@@ -28,6 +28,9 @@ public class Main {
             Spark.port(Integer.valueOf(System.getenv("PORT")));
         }
         
+        Database database = new Database();
+        KurssiDao kurssiDao = new KurssiDao(database);
+        
         Spark.get("/kurssi/:id", (req, res) -> {
             
             Integer kurssiId = Integer.parseInt(req.params("id"));
@@ -120,22 +123,7 @@ public class Main {
         
         Spark.get("*", (req, res) -> {
  
-            List<Kurssi> kurssit = new ArrayList<>();
-
-            // avaa yhteys tietokantaan
-            Connection conn = getConnection();
-            // tee kysely
-            PreparedStatement stmt
-                    = conn.prepareStatement("SELECT * FROM Kurssi");
-            ResultSet tulos = stmt.executeQuery();
-
-            // käsittele kyselyn tulokset
-            while (tulos.next()) {
-                Kurssi k = new Kurssi(tulos.getInt("id"), tulos.getString("nimi"));
-                kurssit.add(k);
-            }
-            // sulje yhteys tietokantaan
-            conn.close();
+            List<Kurssi> kurssit = kurssiDao.findAll();
 
             HashMap map = new HashMap<>();
 
