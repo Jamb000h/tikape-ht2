@@ -57,6 +57,10 @@ public class Main {
             List<Kysymys> kysymykset = kysymysDao.findAllOfAihe(aiheId);
             Aihe aihe = aiheDao.findOne(aiheId);
             Kurssi kurssi = kurssiDao.findOne(aihe.getKurssiId());
+            
+            if(kurssi == null) {
+                kurssi = new Kurssi(0, "fake");
+            }
 
             HashMap map = new HashMap<>();
 
