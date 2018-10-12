@@ -19,8 +19,10 @@ and open the template in the editor.
                 </a>
             </li>
         </ul>
+        <h2>Lisää Kurssi</h2>
         <form method="POST" action="/kurssi">
-            <input type="text" name="nimi" />
+            <label for="nimi">Nimi</label>
+            <input type="text" name="nimi" id="nimi" />
             <input type="submit" value="Lisää kurssi" />
         </form>
     </body>

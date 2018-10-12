@@ -20,5 +20,12 @@ and open the template in the editor.
                 </a>
             </li>
         </ul>
+        <h2>Lisää kysymys</h2>
+        <form method="POST" action="/kysymys">
+            <label for="vastaus">Kysymys</label>
+            <input type="text" name="kysymys" id="kysymys" />
+            <input type="text" name="aihe_id" th:value="${aihe.getId()}" style="display: none;"/>
+            <input type="submit" value="Lisää kysymys" />
+        </form>
     </body>
 </html>

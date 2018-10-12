@@ -83,6 +83,17 @@ public class Main {
 
         }, new ThymeleafTemplateEngine());
         
+        Spark.post("/aihe", (req, res) -> {
+            
+            Aihe aihe = new Aihe(null, Integer.parseInt(req.queryParams("kurssi_id")), req.queryParams("nimi"));
+            aiheDao.saveOrUpdate(aihe);
+
+            res.redirect("/kurssi/" + req.queryParams("kurssi_id"));
+            
+            return "";
+
+        });
+        
         Spark.get("/kysymys/:id", (req, res) -> {
             
             Integer kysymysId = Integer.parseInt(req.params("id"));
@@ -102,6 +113,34 @@ public class Main {
             return new ModelAndView(map, "kysymys");
 
         }, new ThymeleafTemplateEngine());
+        
+        Spark.post("/kysymys", (req, res) -> {
+            
+            Kysymys kysymys = new Kysymys(null, Integer.parseInt(req.queryParams("aihe_id")), req.queryParams("kysymys"));
+            kysymysDao.saveOrUpdate(kysymys);
+
+            res.redirect("/aihe/" + req.queryParams("aihe_id"));
+            
+            return "";
+
+        });
+        
+        Spark.post("/vastaus", (req, res) -> {
+            
+            Boolean oikein = false;
+            
+            if(req.queryParams("oikein") != null) {
+                oikein = true;
+            }
+            
+            Vastaus vastaus = new Vastaus(null, Integer.parseInt(req.queryParams("kysymys_id")), req.queryParams("vastaus"), oikein);
+            vastausDao.saveOrUpdate(vastaus);
+
+            res.redirect("/kysymys/" + req.queryParams("kysymys_id"));
+            
+            return "";
+
+        });
         
         Spark.get("*", (req, res) -> {
  
