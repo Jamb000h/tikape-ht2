@@ -17,6 +17,9 @@ and open the template in the editor.
                 <a th:href="@{~/aihe/{id}(id=${aihe.getId()})}">
                     <h2 th:text="${aihe.getNimi()}"></h2>
                 </a>
+                <a th:href="@{~/aihe/{id}/poista(id=${aihe.getId()})}">
+                    <button>Poista</button>
+                </a>
             </li>
         </ul>
         <h2>Lisää aihe</h2>

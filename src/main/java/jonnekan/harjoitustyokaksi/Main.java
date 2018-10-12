@@ -61,6 +61,16 @@ public class Main {
 
         });
         
+        Spark.get("/kurssi/:id/poista", (req, res) -> {
+            
+            kurssiDao.delete(Integer.parseInt(req.params("id")));
+
+            res.redirect("/");
+            
+            return "";
+
+        });
+        
         Spark.get("/aihe/:id", (req, res) -> {
             
             Integer aiheId = Integer.parseInt(req.params("id"));
@@ -89,6 +99,16 @@ public class Main {
             aiheDao.saveOrUpdate(aihe);
 
             res.redirect("/kurssi/" + req.queryParams("kurssi_id"));
+            
+            return "";
+
+        });
+        
+        Spark.get("/aihe/:id/poista", (req, res) -> {
+            
+            aiheDao.delete(Integer.parseInt(req.params("id")));
+
+            res.redirect("/");
             
             return "";
 
@@ -125,6 +145,16 @@ public class Main {
 
         });
         
+        Spark.get("/kysymys/:id/poista", (req, res) -> {
+            
+            kysymysDao.delete(Integer.parseInt(req.params("id")));
+
+            res.redirect("/");
+            
+            return "";
+
+        });
+        
         Spark.post("/vastaus", (req, res) -> {
             
             Boolean oikein = false;
@@ -137,6 +167,16 @@ public class Main {
             vastausDao.saveOrUpdate(vastaus);
 
             res.redirect("/kysymys/" + req.queryParams("kysymys_id"));
+            
+            return "";
+
+        });
+        
+        Spark.get("/vastaus/:id/poista", (req, res) -> {
+            
+            vastausDao.delete(Integer.parseInt(req.params("id")));
+
+            res.redirect("/");
             
             return "";
 

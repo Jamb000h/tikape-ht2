@@ -24,6 +24,9 @@ and open the template in the editor.
                 <span th:unless="${vastaus.getOikein()}">
                    Väärin
                 </span>
+                <a th:href="@{~/vastaus/{id}/poista(id=${vastaus.getId()})}">
+                    <button>Poista</button>
+                </a>
             </li>
         </ul>
         <h2>Lisää vastaus</h2>

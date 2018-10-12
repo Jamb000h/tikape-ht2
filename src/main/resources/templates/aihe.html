@@ -18,6 +18,9 @@ and open the template in the editor.
                 <a th:href="@{~/kysymys/{id}(id=${kysymys.getId()})}">
                     <h2 th:text="${kysymys.getKysymys()}"></h2>
                 </a>
+                <a th:href="@{~/kysymys/{id}/poista(id=${kysymys.getId()})}">
+                    <button>Poista</button>
+                </a>
             </li>
         </ul>
         <h2>Lisää kysymys</h2>
