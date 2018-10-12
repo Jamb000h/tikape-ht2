@@ -35,7 +35,7 @@ public class VastausDao implements Dao<Vastaus, Integer> {
             return null;
         }
 
-        Vastaus v = new Vastaus(rs.getInt("id"), rs.getInt("kysymys_id"), rs.getString("nimi"), rs.getBoolean("oikein"));
+        Vastaus v = new Vastaus(rs.getInt("id"), rs.getInt("kysymys_id"), rs.getString("vastaus"), rs.getBoolean("oikein"));
   
         stmt.close();
         rs.close();
@@ -56,7 +56,7 @@ public class VastausDao implements Dao<Vastaus, Integer> {
         ResultSet rs = stmt.executeQuery();
         
         while(rs.next()) {
-            vastaukset.add(new Vastaus(rs.getInt("id"), rs.getInt("kysymys_id"), rs.getString("nimi"), rs.getBoolean("oikein")));
+            vastaukset.add(new Vastaus(rs.getInt("id"), rs.getInt("kysymys_id"), rs.getString("vastaus"), rs.getBoolean("oikein")));
         }
   
         stmt.close();
@@ -78,7 +78,7 @@ public class VastausDao implements Dao<Vastaus, Integer> {
         ResultSet rs = stmt.executeQuery();
         
         while(rs.next()) {
-            vastaukset.add(new Vastaus(rs.getInt("id"), rs.getInt("kysymys_id"), rs.getString("nimi"), rs.getBoolean("oikein")));
+            vastaukset.add(new Vastaus(rs.getInt("id"), rs.getInt("kysymys_id"), rs.getString("vastaus"), rs.getBoolean("oikein")));
         }
   
         stmt.close();
