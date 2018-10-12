@@ -23,7 +23,7 @@ and open the template in the editor.
         <form method="POST" action="/aihe">
             <label for="nimi">Nimi</label>
             <input type="text" name="nimi" id="nimi" />
-            <input type="text" name="kurssi_id" th:value="${kurssi.getId()}" style="display: none;"/>
+            <input type="hidden" name="kurssi_id" th:value="${kurssi.getId()}" />
             <input type="submit" value="Lisää aihe" />
         </form>
     </body>

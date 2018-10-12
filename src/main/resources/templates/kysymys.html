@@ -32,7 +32,7 @@ and open the template in the editor.
             <input type="text" name="vastaus" id="vastaus" />
             <label for="oikein">Oikein</label>
             <input type="checkbox" name="oikein" id="oikein" />
-            <input type="text" name="kysymys_id" th:value="${kysymys.getId()}" style="display: none;"/>
+            <input type="hidden" name="kysymys_id" th:value="${kysymys.getId()}" />
             <input type="submit" value="Lisää kysymys" />
         </form>
     </body>

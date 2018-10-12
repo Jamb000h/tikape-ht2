@@ -24,7 +24,7 @@ and open the template in the editor.
         <form method="POST" action="/kysymys">
             <label for="vastaus">Kysymys</label>
             <input type="text" name="kysymys" id="kysymys" />
-            <input type="text" name="aihe_id" th:value="${aihe.getId()}" style="display: none;"/>
+            <input type="hidden" name="aihe_id" th:value="${aihe.getId()}" />
             <input type="submit" value="Lisää kysymys" />
         </form>
     </body>
