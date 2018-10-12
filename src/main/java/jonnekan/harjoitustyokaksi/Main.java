@@ -50,6 +50,17 @@ public class Main {
 
         }, new ThymeleafTemplateEngine());
         
+        Spark.post("/kurssi", (req, res) -> {
+            
+            Kurssi kurssi = new Kurssi(null, req.queryParams("nimi"));
+            kurssiDao.saveOrUpdate(kurssi);
+
+            res.redirect("/");
+            
+            return "";
+
+        });
+        
         Spark.get("/aihe/:id", (req, res) -> {
             
             Integer aiheId = Integer.parseInt(req.params("id"));
