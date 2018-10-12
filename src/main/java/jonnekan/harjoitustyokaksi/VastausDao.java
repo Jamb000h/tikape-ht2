@@ -16,17 +16,17 @@ import java.util.List;
  *
  * @author Jonne
  */
-public class AiheDao implements Dao<Aihe, Integer> {
+public class VastausDao implements Dao<Vastaus, Integer> {
     private Database database;
 
-    public AiheDao(Database database) {
+    public VastausDao(Database database) {
         this.database = database;
     }
 
     @Override
-    public Aihe findOne(Integer key) throws SQLException {
+    public Vastaus findOne(Integer key) throws SQLException {
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Aihe WHERE id = ?");
+        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Vastaus WHERE id = ?");
         stmt.setInt(1, key);
 
         ResultSet rs = stmt.executeQuery();
@@ -35,28 +35,28 @@ public class AiheDao implements Dao<Aihe, Integer> {
             return null;
         }
 
-        Aihe a = new Aihe(rs.getInt("id"), rs.getInt("kurssi_id"), rs.getString("nimi"));
+        Vastaus v = new Vastaus(rs.getInt("id"), rs.getInt("kysymys_id"), rs.getString("nimi"), rs.getBoolean("oikein"));
   
         stmt.close();
         rs.close();
 
         conn.close();
 
-        return a;
+        return v;
     }
 
     @Override
-    public List<Aihe> findAll() throws SQLException {
+    public List<Vastaus> findAll() throws SQLException {
         
-        ArrayList<Aihe> aiheet = new ArrayList<>();
+        ArrayList<Vastaus> vastaukset = new ArrayList<>();
         
 	Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Aihe");
+        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Vastaus");
 
         ResultSet rs = stmt.executeQuery();
         
         while(rs.next()) {
-            aiheet.add(new Aihe(rs.getInt("id"), rs.getInt("kurssi_id"), rs.getString("nimi")));
+            vastaukset.add(new Vastaus(rs.getInt("id"), rs.getInt("kysymys_id"), rs.getString("nimi"), rs.getBoolean("oikein")));
         }
   
         stmt.close();
@@ -64,21 +64,21 @@ public class AiheDao implements Dao<Aihe, Integer> {
 
         conn.close();
 
-        return aiheet;
+        return vastaukset;
     }
     
-    public List<Aihe> findAllOfKurssi(Integer kurssiId) throws SQLException {
+    public List<Vastaus> findAllOfKysymys(Integer kysymysId) throws SQLException {
         
-        ArrayList<Aihe> aiheet = new ArrayList<>();
+        ArrayList<Vastaus> vastaukset = new ArrayList<>();
         
 	Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Aihe WHERE kurssi_id = ?");
-        stmt.setInt(1, kurssiId);
+        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Vastaus WHERE kysymys_id = ?");
+        stmt.setInt(1, kysymysId);
 
         ResultSet rs = stmt.executeQuery();
         
         while(rs.next()) {
-            aiheet.add(new Aihe(rs.getInt("id"), rs.getInt("kurssi_id"), rs.getString("nimi")));
+            vastaukset.add(new Vastaus(rs.getInt("id"), rs.getInt("kysymys_id"), rs.getString("nimi"), rs.getBoolean("oikein")));
         }
   
         stmt.close();
@@ -86,27 +86,28 @@ public class AiheDao implements Dao<Aihe, Integer> {
 
         conn.close();
 
-        return aiheet;
+        return vastaukset;
     }
 
     @Override
-    public Aihe saveOrUpdate(Aihe a) throws SQLException {
+    public Vastaus saveOrUpdate(Vastaus v) throws SQLException {
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("INSERT INTO Aihe (kurssi_id, name) VALUES (?, ?)");
-        stmt.setInt(1, a.getKurssiId());
-        stmt.setString(2, a.getNimi());
+        PreparedStatement stmt = conn.prepareStatement("INSERT INTO Vastaus (vastaus, kysymys_id, oikein) VALUES (?, ?, ?)");
+        stmt.setString(1, v.getVastaus());
+        stmt.setInt(2, v.getKysymysId());
+        stmt.setBoolean(3, v.getOikein());
         stmt.execute();
 
         stmt.close();
         conn.close();
         
-        return a;
+        return v;
     }
   
     @Override
     public void delete(Integer key) throws SQLException {
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("DELETE FROM Aihe WHERE id = ?");
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM Vastaus WHERE id = ?");
 
         stmt.setInt(1, key);
         stmt.executeUpdate();

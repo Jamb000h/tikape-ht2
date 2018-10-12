@@ -31,18 +31,20 @@ public class Main {
         Database database = new Database();
         KurssiDao kurssiDao = new KurssiDao(database);
         AiheDao aiheDao = new AiheDao(database);
+        KysymysDao kysymysDao = new KysymysDao(database);
+        VastausDao vastausDao = new VastausDao(database);
         
         Spark.get("/kurssi/:id", (req, res) -> {
             
             Integer kurssiId = Integer.parseInt(req.params("id"));
             
-            List<Aihe> aiheet = aiheDao.findAll();
-            Kurssi k = kurssiDao.findOne(kurssiId);
+            List<Aihe> aiheet = aiheDao.findAllOfKurssi(kurssiId);
+            Kurssi kurssi = kurssiDao.findOne(kurssiId);
 
             HashMap map = new HashMap<>();
 
             map.put("aiheet", aiheet);
-            map.put("kurssi", k);
+            map.put("kurssi", kurssi);
 
             return new ModelAndView(map, "kurssi");
 
@@ -52,27 +54,15 @@ public class Main {
             
             Integer aiheId = Integer.parseInt(req.params("id"));
             
-            List<Kysymys> kysymykset = new ArrayList<>();
-
-            // avaa yhteys tietokantaan
-            Connection conn = getConnection();
-            // tee kysely
-            PreparedStatement stmt
-                    = conn.prepareStatement("SELECT * FROM Kysymys WHERE aihe_id = ?");
-            stmt.setInt(1, aiheId);
-            ResultSet tulos = stmt.executeQuery();
-
-            // käsittele kyselyn tulokset
-            while (tulos.next()) {
-                Kysymys k = new Kysymys(tulos.getInt("id"), tulos.getInt("aihe_id"), tulos.getString("kysymys"));
-                kysymykset.add(k);
-            }
-            // sulje yhteys tietokantaan
-            conn.close();
+            List<Kysymys> kysymykset = kysymysDao.findAllOfAihe(aiheId);
+            Aihe aihe = aiheDao.findOne(aiheId);
+            Kurssi kurssi = kurssiDao.findOne(aihe.getKurssiId());
 
             HashMap map = new HashMap<>();
 
             map.put("kysymykset", kysymykset);
+            map.put("aihe", aihe);
+            map.put("kurssi", kurssi);
 
             return new ModelAndView(map, "aihe");
 
@@ -82,27 +72,17 @@ public class Main {
             
             Integer kysymysId = Integer.parseInt(req.params("id"));
             
-            List<Vastaus> vastaukset = new ArrayList<>();
-
-            // avaa yhteys tietokantaan
-            Connection conn = getConnection();
-            // tee kysely
-            PreparedStatement stmt
-                    = conn.prepareStatement("SELECT * FROM Vastaus WHERE kysymys_id = ?");
-            stmt.setInt(1, kysymysId);
-            ResultSet tulos = stmt.executeQuery();
-
-            // käsittele kyselyn tulokset
-            while (tulos.next()) {
-                Vastaus v = new Vastaus(tulos.getInt("id"), tulos.getInt("kysymys_id"), tulos.getString("vastaus"), tulos.getBoolean("oikein"));
-                vastaukset.add(v);
-            }
-            // sulje yhteys tietokantaan
-            conn.close();
+            List<Vastaus> vastaukset = vastausDao.findAllOfKysymys(kysymysId);
+            Kysymys kysymys = kysymysDao.findOne(kysymysId);
+            Aihe aihe = aiheDao.findOne(kysymys.getAiheId());
+            Kurssi kurssi = kurssiDao.findOne(aihe.getKurssiId());
 
             HashMap map = new HashMap<>();
 
             map.put("vastaukset", vastaukset);
+            map.put("kysymys", kysymys);
+            map.put("aihe", aihe);
+            map.put("kurssi", kurssi);
 
             return new ModelAndView(map, "kysymys");
 
