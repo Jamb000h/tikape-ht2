@@ -12,7 +12,7 @@ and open the template in the editor.
     </head>
     <body>
         <h1 th:text="${'Aiheen ' + aihe.getNimi() + ' kysymykset:'}">Aiheen nimi</h1>
-        <h2 th:text="${'Kurssi: ' + kurssi.getNimi()}">Kurssin nimi</h2>
+
         <ul>
             <li th:each="kysymys : ${kysymykset}">
                 <a th:href="@{~/kysymys/{id}(id=${kysymys.getId()})}">
