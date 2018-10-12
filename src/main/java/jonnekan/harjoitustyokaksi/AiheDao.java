@@ -92,7 +92,7 @@ public class AiheDao implements Dao<Aihe, Integer> {
     @Override
     public Aihe saveOrUpdate(Aihe a) throws SQLException {
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("INSERT INTO Aihe (kurssi_id, name) VALUES (?, ?)");
+        PreparedStatement stmt = conn.prepareStatement("INSERT INTO Aihe (kurssi_id, nimi) VALUES (?, ?)");
         stmt.setInt(1, a.getKurssiId());
         stmt.setString(2, a.getNimi());
         stmt.execute();
