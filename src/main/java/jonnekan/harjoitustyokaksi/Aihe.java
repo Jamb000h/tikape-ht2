@@ -29,11 +29,11 @@ public class Aihe {
     }
     
     public Integer getKurssiId() {
-        return id;
+        return kurssiId;
     }
 
     public void setKurssiId(Integer kurssiId) {
-        this.id = kurssiId;
+        this.kurssiId = kurssiId;
     }
 
     public String getNimi() {
