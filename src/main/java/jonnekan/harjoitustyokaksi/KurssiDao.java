@@ -66,7 +66,7 @@ public class KurssiDao implements Dao<Kurssi, Integer> {
     @Override
     public Kurssi saveOrUpdate(Kurssi k) throws SQLException {
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("INSERT INTO Kurssi (name) VALUES (?)");
+        PreparedStatement stmt = conn.prepareStatement("INSERT INTO Kurssi (nimi) VALUES (?)");
         
         stmt.setString(1, k.getNimi());
         stmt.execute();
