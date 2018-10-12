@@ -11,6 +11,14 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
+        <ul>
+            <li>
+                <a href="/">Kurssien listaukseen</a>
+            </li>
+            <li>
+                <a th:href="@{~/kurssi/{id}(id=${kurssi.getId()})}">Aiheen kurssiin</a>
+            </li>
+        </ul>
         <h1 th:text="${'Aiheen ' + aihe.getNimi() + ' kysymykset:'}">Aiheen nimi</h1>
         <h2 th:text="${'Kurssi: ' + kurssi.getNimi()}">Kurssin nimi</h2>
         <ul>

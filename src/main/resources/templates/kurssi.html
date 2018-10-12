@@ -11,6 +11,11 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
+        <ul>
+            <li>
+                <a href="/">Kurssien listaukseen</a>
+            </li>
+        </ul>
         <h1 th:text="${'Kurssin ' + kurssi.getNimi() + ' aiheet:'}">Kurssin nimi</h1>
         <ul>
             <li th:each="aihe : ${aiheet}">
