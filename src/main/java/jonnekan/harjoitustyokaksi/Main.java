@@ -34,6 +34,8 @@ public class Main {
         KysymysDao kysymysDao = new KysymysDao(database);
         VastausDao vastausDao = new VastausDao(database);
         
+        Spark.staticFiles.location("/public");
+        
         Spark.get("/kurssi/:id", (req, res) -> {
             
             Integer kurssiId = Integer.parseInt(req.params("id"));
