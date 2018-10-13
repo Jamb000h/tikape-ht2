@@ -34,7 +34,7 @@ and open the template in the editor.
         <h2>Lisää kysymys</h2>
         <form method="POST" action="/kysymys">
             <label for="vastaus">Kysymys</label>
-            <input type="text" name="kysymys" id="kysymys" />
+            <input type="text" name="kysymys" id="kysymys" required/>
             <input type="hidden" name="aihe_id" th:value="${aihe.getId()}" />
             <input type="submit" value="Lisää kysymys" />
         </form>

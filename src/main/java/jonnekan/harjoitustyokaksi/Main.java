@@ -105,10 +105,10 @@ public class Main {
         });
         
         Spark.get("/aihe/:id/poista", (req, res) -> {
-            
+            Aihe a = aiheDao.findOne(Integer.parseInt(req.params("id")));
             aiheDao.delete(Integer.parseInt(req.params("id")));
 
-            res.redirect("/");
+            res.redirect("/kurssi/" + a.getKurssiId());
             
             return "";
 
@@ -147,9 +147,10 @@ public class Main {
         
         Spark.get("/kysymys/:id/poista", (req, res) -> {
             
+            Kysymys k = kysymysDao.findOne(Integer.parseInt(req.params("id")));
             kysymysDao.delete(Integer.parseInt(req.params("id")));
 
-            res.redirect("/");
+            res.redirect("/aihe/" + k.getAiheId());
             
             return "";
 
@@ -174,9 +175,10 @@ public class Main {
         
         Spark.get("/vastaus/:id/poista", (req, res) -> {
             
+            Vastaus v = vastausDao.findOne(Integer.parseInt(req.params("id")));
             vastausDao.delete(Integer.parseInt(req.params("id")));
 
-            res.redirect("/");
+            res.redirect("/kysymys/" + v.getKysymysId());
             
             return "";
 
