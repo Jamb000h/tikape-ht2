@@ -47,12 +47,24 @@ public class Main {
 
             map.put("aiheet", aiheet);
             map.put("kurssi", kurssi);
+            
+            if(req.queryParams("error") != null) {
+                List<String> virheet = new ArrayList<>();
+                virheet.add(req.queryParams("error"));
+                map.put("virheet", virheet);
+            }
 
             return new ModelAndView(map, "kurssi");
 
         }, new ThymeleafTemplateEngine());
         
         Spark.post("/kurssi", (req, res) -> {
+            
+            if(req.queryParams("nimi").trim().equals("")) {
+                res.redirect("/?error=Nimi%20vaaditaan");
+                
+                return "";
+            }
             
             Kurssi kurssi = new Kurssi(null, req.queryParams("nimi"));
             kurssiDao.saveOrUpdate(kurssi);
@@ -90,12 +102,24 @@ public class Main {
             map.put("kysymykset", kysymykset);
             map.put("aihe", aihe);
             map.put("kurssi", kurssi);
+            
+            if(req.queryParams("error") != null) {
+                List<String> virheet = new ArrayList<>();
+                virheet.add(req.queryParams("error"));
+                map.put("virheet", virheet);
+            }
 
             return new ModelAndView(map, "aihe");
 
         }, new ThymeleafTemplateEngine());
         
         Spark.post("/aihe", (req, res) -> {
+            
+            if(req.queryParams("nimi").trim().equals("")) {
+                res.redirect("/kurssi/" + req.queryParams("kurssi_id") + "?error=Nimi%20vaaditaan");
+                
+                return "";
+            }
             
             Aihe aihe = new Aihe(null, Integer.parseInt(req.queryParams("kurssi_id")), req.queryParams("nimi"));
             aiheDao.saveOrUpdate(aihe);
@@ -131,12 +155,24 @@ public class Main {
             map.put("kysymys", kysymys);
             map.put("aihe", aihe);
             map.put("kurssi", kurssi);
+            
+            if(req.queryParams("error") != null) {
+                List<String> virheet = new ArrayList<>();
+                virheet.add(req.queryParams("error"));
+                map.put("virheet", virheet);
+            }
 
             return new ModelAndView(map, "kysymys");
 
         }, new ThymeleafTemplateEngine());
         
         Spark.post("/kysymys", (req, res) -> {
+            
+            if(req.queryParams("kysymys").trim().equals("")) {
+                res.redirect("/aihe/" + req.queryParams("aihe_id") + "?error=Kysymys%20vaaditaan");
+                
+                return "";
+            }
             
             Kysymys kysymys = new Kysymys(null, Integer.parseInt(req.queryParams("aihe_id")), req.queryParams("kysymys"));
             kysymysDao.saveOrUpdate(kysymys);
@@ -159,6 +195,12 @@ public class Main {
         });
         
         Spark.post("/vastaus", (req, res) -> {
+            
+            if(req.queryParams("vastaus").trim().equals("")) {
+                res.redirect("/kysymys/" + req.queryParams("kysymys_id") + "?error=Vastaus%20vaaditaan");
+                
+                return "";
+            }
             
             Boolean oikein = false;
             
@@ -193,6 +235,12 @@ public class Main {
             HashMap map = new HashMap<>();
 
             map.put("kurssit", kurssit);
+            
+            if(req.queryParams("error") != null) {
+                List<String> virheet = new ArrayList<>();
+                virheet.add(req.queryParams("error"));
+                map.put("virheet", virheet);
+            }
 
             return new ModelAndView(map, "index");
 

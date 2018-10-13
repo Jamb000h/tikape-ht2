@@ -17,8 +17,13 @@ h3 {
     font-size: 1.3rem;
 }
 
-li:hover {
-    background-color: lightgrey;
+.errors ul {
+    list-style: none;
+}
+
+.errors ul li {
+    padding: .3rem .6rem;
+    background-color: lightcoral;
 }
 
 nav {
@@ -34,6 +39,10 @@ nav ul li {
     display: inline-block;
     margin-right: .5rem;
     padding: .3rem .6rem;
+}
+
+nav ul li:hover {
+    background-color: lightgrey;
 }
 
 .wrapper {
@@ -80,6 +89,10 @@ input {
     margin-bottom: .5rem;
     display: flex;
     justify-content: space-between;
+}
+
+.content ul li:hover {
+    background-color: lightgrey;
 }
 
 .delete {
