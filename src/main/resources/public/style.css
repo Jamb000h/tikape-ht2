@@ -65,6 +65,8 @@ nav ul li:hover {
 form {
     padding: .3rem .6rem;
     display: flex;
+    flex-direction: column;
+    width: 50%;
 }
 
 input {
