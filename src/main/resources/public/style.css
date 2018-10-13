@@ -2,6 +2,7 @@
     font-family: "Arial";
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 h1 {
@@ -14,6 +15,10 @@ h2 {
 
 h3 {
     font-size: 1.3rem;
+}
+
+li:hover {
+    background-color: lightgrey;
 }
 
 nav {
@@ -31,20 +36,38 @@ nav ul li {
     padding: .3rem .6rem;
 }
 
+.wrapper {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
 .info {
     padding: 2rem;
+    width: 50%;
+    border-left: 1px solid grey;
 }
 
 .form-wrapper {
     padding: 2rem;
+    width: 50%;
 }
 
 form {
     padding: .3rem .6rem;
+    display: flex;
+}
+
+input {
+    padding: .3rem .6rem;
+    margin-bottom: 1rem;
 }
 
 .content {
     padding: 2rem;
+    display: flex;
+    flex-flow: column;
+    width: 100%;
 }
 
 .content ul {
@@ -56,8 +79,16 @@ form {
     border: 1px solid grey;
     margin-bottom: .5rem;
     display: flex;
+    justify-content: space-between;
 }
 
 .delete {
     border-left: 1px solid lightgrey;
+    text-decoration: none;
+    text-transform: lowercase;
+}
+
+a.text, a.text:visited, a.text:hover {
+    text-decoration: none;
+    color: grey;
 }
