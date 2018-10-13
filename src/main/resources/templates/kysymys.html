@@ -54,7 +54,7 @@ and open the template in the editor.
         <div class="content">
             <ul>
                 <li th:each="vastaus : ${vastaukset}">
-                    <h4 class="text" th:text="${vastaus.getVastaus()}"></h4>
+                    <p class="text" th:text="${vastaus.getVastaus()}"></p>
                     <span class="correct" th:if="${vastaus.getOikein()}">
                        Oikein
                     </span>
