@@ -9,34 +9,45 @@ and open the template in the editor.
         <title th:text="${aihe.getNimi()}">Aiheen nimi</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="style.css" type="text/css" rel="stylesheet" />
     </head>
     <body>
-        <ul>
-            <li>
-                <a href="/">Kurssien listaukseen</a>
-            </li>
-            <li>
-                <a th:href="@{~/kurssi/{id}(id=${kurssi.getId()})}">Aiheen kurssiin</a>
-            </li>
-        </ul>
-        <h1 th:text="${'Aiheen ' + aihe.getNimi() + ' kysymykset:'}">Aiheen nimi</h1>
-        <h2 th:text="${'Kurssi: ' + kurssi.getNimi()}">Kurssin nimi</h2>
-        <ul>
-            <li th:each="kysymys : ${kysymykset}">
-                <a th:href="@{~/kysymys/{id}(id=${kysymys.getId()})}">
-                    <h2 th:text="${kysymys.getKysymys()}"></h2>
-                </a>
-                <a th:href="@{~/kysymys/{id}/poista(id=${kysymys.getId()})}">
-                    <button>Poista</button>
-                </a>
-            </li>
-        </ul>
-        <h2>Lisää kysymys</h2>
-        <form method="POST" action="/kysymys">
-            <label for="vastaus">Kysymys</label>
-            <input type="text" name="kysymys" id="kysymys" required/>
-            <input type="hidden" name="aihe_id" th:value="${aihe.getId()}" />
-            <input type="submit" value="Lisää kysymys" />
-        </form>
+        <nav>
+           <ul>
+                <li>
+                    <a href="/">Kurssien listaukseen</a>
+                </li>
+                <li>
+                    <a th:href="@{~/kurssi/{id}(id=${kurssi.getId()})}">Aiheen kurssiin</a>
+                </li>
+            </ul> 
+        </nav>
+        <div class="wrapper">
+            <div class="info">
+                <h1 th:text="${'Aiheen ' + aihe.getNimi() + ' kysymykset:'}">Aiheen nimi</h1>
+                <h2 th:text="${'Kurssi: ' + kurssi.getNimi()}">Kurssin nimi</h2>
+            </div>
+            <div class="form-wrapper">
+                <h2>Lisää kysymys</h2>
+                <form method="POST" action="/kysymys">
+                    <label for="vastaus">Kysymys</label>
+                    <input type="text" name="kysymys" id="kysymys" required/>
+                    <input type="hidden" name="aihe_id" th:value="${aihe.getId()}" />
+                    <input type="submit" value="Lisää kysymys" />
+                </form>
+            </div>
+            <div class="content">
+                <ul>
+                    <li th:each="kysymys : ${kysymykset}">
+                        <a class="text" th:href="@{~/kysymys/{id}(id=${kysymys.getId()})}">
+                            <p th:text="${kysymys.getKysymys()}"></p>
+                        </a>
+                        <a class="delete" th:href="@{~/kysymys/{id}/poista(id=${kysymys.getId()})}">
+                            <span>Poista</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </body>
 </html>
