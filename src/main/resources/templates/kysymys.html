@@ -19,43 +19,54 @@ and open the template in the editor.
                 </li>
             </ul>
         </div>
-        <ul>
-            <li>
-                <a href="/">Kurssien listaukseen</a>
-            </li>
-            <li>
-                <a th:href="@{~/kurssi/{id}(id=${kurssi.getId()})}">Aiheen kurssiin</a>
-            </li>
-            <li>
-                <a th:href="@{~/aihe/{id}(id=${aihe.getId()})}">Kysymyksen aiheeseen</a>
-            </li>
-        </ul>
-        <h1 th:text="${'Kysymyksen ' + kysymys.getKysymys() + ' vastaukset'}">Kysymys</h1>
-        <h2 th:text="${'Aihe ' + aihe.getNimi()}">Aiheen nimi</h2>
-        <h3 th:text="${'Kurssi: ' + kurssi.getNimi()}">Kurssin nimi</h3>
-        <ul>
-            <li th:each="vastaus : ${vastaukset}">
-                <h4 th:text="${vastaus.getVastaus()}"></h4>
-                <span th:if="${vastaus.getOikein()}">
-                   Oikein
-                </span>
-                <!-- ELSE -->
-                <span th:unless="${vastaus.getOikein()}">
-                   Väärin
-                </span>
-                <a th:href="@{~/vastaus/{id}/poista(id=${vastaus.getId()})}">
-                    <button>Poista</button>
-                </a>
-            </li>
-        </ul>
-        <h2>Lisää vastaus</h2>
-        <form method="POST" action="/vastaus">
-            <label for="vastaus">Vastaus</label>
-            <input type="text" name="vastaus" id="vastaus" required />
-            <label for="oikein">Oikein</label>
-            <input type="checkbox" name="oikein" id="oikein" />
-            <input type="hidden" name="kysymys_id" th:value="${kysymys.getId()}" />
-            <input type="submit" value="Lisää kysymys" />
-        </form>
+        <nav>
+            <ul>
+                <li>
+                    <a href="/">Kurssien listaukseen</a>
+                </li>
+                <li>
+                    <a th:href="@{~/kurssi/{id}(id=${kurssi.getId()})}">Aiheen kurssiin</a>
+                </li>
+                <li>
+                    <a th:href="@{~/aihe/{id}(id=${aihe.getId()})}">Kysymyksen aiheeseen</a>
+                </li>
+            </ul>
+        </nav>
+        <div class="wrapper">
+            <div class="info">
+                <h1>Vastaukset</h1>
+                <h2 th:text="${'Kysymys: ' + kysymys.getKysymys()">Kysymys</h2>
+                <h3 th:text="${'Aihe ' + aihe.getNimi()}">Aiheen nimi</h3>
+                <h3 th:text="${'Kurssi: ' + kurssi.getNimi()}">Kurssin nimi</h3>
+            </div>
+            <div class="form-wrapper">
+                <h2>Lisää vastaus</h2>
+                <form method="POST" action="/vastaus">
+                    <label for="vastaus">Vastaus</label>
+                    <input type="text" name="vastaus" id="vastaus" required />
+                    <label for="oikein">Oikein</label>
+                    <input type="checkbox" name="oikein" id="oikein" />
+                    <input type="hidden" name="kysymys_id" th:value="${kysymys.getId()}" />
+                    <input type="submit" value="Lisää kysymys" />
+                </form>
+            </div>
+        </div>
+        <div class="content">
+            <ul>
+                <li th:each="vastaus : ${vastaukset}">
+                    <h4 th:text="${vastaus.getVastaus()}"></h4>
+                    <span th:if="${vastaus.getOikein()}">
+                       Oikein
+                    </span>
+                    <!-- ELSE -->
+                    <span th:unless="${vastaus.getOikein()}">
+                       Väärin
+                    </span>
+                    <a th:href="@{~/vastaus/{id}/poista(id=${vastaus.getId()})}">
+                        <button>Poista</button>
+                    </a>
+                </li>
+            </ul>
+        </div>
     </body>
 </html>

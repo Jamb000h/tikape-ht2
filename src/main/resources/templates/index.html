@@ -19,22 +19,30 @@ and open the template in the editor.
                 </li>
             </ul>
         </div>
-        <h1>Kurssit</h1>
-        <ul>
-            <li th:each="kurssi : ${kurssit}">
-                <a th:href="@{~/kurssi/{id}(id=${kurssi.getId()})}">
-                    <h2 th:text="${kurssi.getNimi()}"></h2>
-                </a>
-                <a th:href="@{~/kurssi/{id}/poista(id=${kurssi.getId()})}">
-                    <button>Poista</button>
-                </a>
-            </li>
-        </ul>
-        <h2>Lisää Kurssi</h2>
-        <form method="POST" action="/kurssi">
-            <label for="nimi">Nimi</label>
-            <input type="text" name="nimi" id="nimi" required />
-            <input type="submit" value="Lisää kurssi" />
-        </form>
+        <div class="wrapper">
+            <div class="info">
+                <h1>Kurssit</h1>
+            </div>
+            <div class="form-wrapper">
+                <h2>Lisää Kurssi</h2>
+                <form method="POST" action="/kurssi">
+                    <label for="nimi">Nimi</label>
+                    <input type="text" name="nimi" id="nimi" required />
+                    <input type="submit" value="Lisää kurssi" />
+                </form>
+            </div>
+        </div>
+        <div class="content">
+            <ul>
+                <li th:each="kurssi : ${kurssit}">
+                    <a th:href="@{~/kurssi/{id}(id=${kurssi.getId()})}">
+                        <h2 th:text="${kurssi.getNimi()}"></h2>
+                    </a>
+                    <a th:href="@{~/kurssi/{id}/poista(id=${kurssi.getId()})}">
+                        <button>Poista</button>
+                    </a>
+                </li>
+            </ul>
+        </div>
     </body>
 </html>

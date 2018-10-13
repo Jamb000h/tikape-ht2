@@ -19,28 +19,39 @@ and open the template in the editor.
                 </li>
             </ul>
         </div>
-        <ul>
-            <li>
-                <a href="/">Kurssien listaukseen</a>
-            </li>
-        </ul>
-        <h1 th:text="${'Kurssin ' + kurssi.getNimi() + ' aiheet:'}">Kurssin nimi</h1>
-        <ul>
-            <li th:each="aihe : ${aiheet}">
-                <a th:href="@{~/aihe/{id}(id=${aihe.getId()})}">
-                    <h2 th:text="${aihe.getNimi()}"></h2>
-                </a>
-                <a th:href="@{~/aihe/{id}/poista(id=${aihe.getId()})}">
-                    <button>Poista</button>
-                </a>
-            </li>
-        </ul>
-        <h2>Lisää aihe</h2>
-        <form method="POST" action="/aihe">
-            <label for="nimi">Nimi</label>
-            <input type="text" name="nimi" id="nimi" required />
-            <input type="hidden" name="kurssi_id" th:value="${kurssi.getId()}" />
-            <input type="submit" value="Lisää aihe" />
-        </form>
+        <nav>
+            <ul>
+                <li>
+                    <a href="/">Kurssien listaukseen</a>
+                </li>
+            </ul>
+        </nav>
+        <div class="wrapper">
+            <div class="info">
+                <h1>Aiheet</h1>
+                <h3 th:text="${'Kurssi: ' + kurssi.getNimi()}">Kurssi</h3>
+            </div>
+            <div class="form-wrapper">
+                <h2>Lisää aihe</h2>
+                <form method="POST" action="/aihe">
+                    <label for="nimi">Nimi</label>
+                    <input type="text" name="nimi" id="nimi" required />
+                    <input type="hidden" name="kurssi_id" th:value="${kurssi.getId()}" />
+                    <input type="submit" value="Lisää aihe" />
+                </form>
+            </div>
+        </div>
+        <div class="content">
+            <ul>
+                <li th:each="aihe : ${aiheet}">
+                    <a th:href="@{~/aihe/{id}(id=${aihe.getId()})}">
+                        <h2 th:text="${aihe.getNimi()}"></h2>
+                    </a>
+                    <a th:href="@{~/aihe/{id}/poista(id=${aihe.getId()})}">
+                        <button>Poista</button>
+                    </a>
+                </li>
+            </ul>
+        </div>
     </body>
 </html>
