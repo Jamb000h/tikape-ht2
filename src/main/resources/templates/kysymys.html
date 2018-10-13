@@ -54,16 +54,16 @@ and open the template in the editor.
         <div class="content">
             <ul>
                 <li th:each="vastaus : ${vastaukset}">
-                    <h4 th:text="${vastaus.getVastaus()}"></h4>
-                    <span th:if="${vastaus.getOikein()}">
+                    <h4 class="text" th:text="${vastaus.getVastaus()}"></h4>
+                    <span class="correct" th:if="${vastaus.getOikein()}">
                        Oikein
                     </span>
                     <!-- ELSE -->
-                    <span th:unless="${vastaus.getOikein()}">
+                    <span class="not-correct" th:unless="${vastaus.getOikein()}">
                        Väärin
                     </span>
-                    <a th:href="@{~/vastaus/{id}/poista(id=${vastaus.getId()})}">
-                        <button>Poista</button>
+                    <a class="delete" th:href="@{~/vastaus/{id}/poista(id=${vastaus.getId()})}">
+                        <span>Poista</span>
                     </a>
                 </li>
             </ul>

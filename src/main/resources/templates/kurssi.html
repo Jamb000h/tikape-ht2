@@ -44,11 +44,11 @@ and open the template in the editor.
         <div class="content">
             <ul>
                 <li th:each="aihe : ${aiheet}">
-                    <a th:href="@{~/aihe/{id}(id=${aihe.getId()})}">
+                    <a class="text" th:href="@{~/aihe/{id}(id=${aihe.getId()})}">
                         <h2 th:text="${aihe.getNimi()}"></h2>
                     </a>
-                    <a th:href="@{~/aihe/{id}/poista(id=${aihe.getId()})}">
-                        <button>Poista</button>
+                    <a class="delete" th:href="@{~/aihe/{id}/poista(id=${aihe.getId()})}">
+                        <span>Poista</span>
                     </a>
                 </li>
             </ul>

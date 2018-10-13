@@ -11,10 +11,16 @@ h1 {
 
 h2 {
     font-size: 1.6rem;
+    font-weight: 400;
 }
 
 h3 {
     font-size: 1.3rem;
+    font-weight: 400;
+}
+
+h4 {
+    font-weight: 400;
 }
 
 .errors ul {
@@ -54,12 +60,12 @@ nav ul li:hover {
 .info {
     padding: 2rem;
     width: 50%;
-    border-left: 1px solid grey;
 }
 
 .form-wrapper {
     padding: 2rem;
     width: 50%;
+    border-left: 1px solid grey;
 }
 
 form {
@@ -67,6 +73,7 @@ form {
     display: flex;
     flex-direction: column;
     width: 50%;
+    align-items: flex-start;
 }
 
 input {
@@ -97,10 +104,23 @@ input {
     background-color: lightgrey;
 }
 
+.content span {
+    flex: 1;
+    margin-left: 1rem;
+}
+
 .delete {
     border-left: 1px solid lightgrey;
     text-decoration: none;
     text-transform: lowercase;
+}
+
+.correct {
+    color: lightgreen;
+}
+
+.not-correct {
+    color: lightcoral;
 }
 
 a.text, a.text:visited, a.text:hover {
